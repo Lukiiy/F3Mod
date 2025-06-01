@@ -1,0 +1,33 @@
+{
+  "schemaVersion": 1,
+  "id": "f3mod",
+  "version": "${version}",
+
+  "name": "F3 Mod",
+    "description": "Reworks the Debug Screen to include more data and an API. You can configure it using the 'f3mod.properties' file in the 'config' folder in your Minecraft directory!",
+  "authors": [
+    "Lukiiy"
+  ],
+  "contact": {
+    "sources": "https://github.com/Lukiiy/F3Mod",
+    "issues": "https://github.com/Lukiiy/F3Mod/issues"
+  },
+
+  "license": "MIT",
+  "icon": "assets/f3mod/icon.png",
+
+  "environment": "client",
+  "entrypoints": {
+    "client": [
+      "me.lukiiy.f3mod.F3Mod"
+    ]
+  },
+  "mixins": [
+    "f3mod.mixins.json"
+  ],
+
+  "depends": {
+    "fabricloader": ">=0.13.3",
+    "minecraft": "1.0.0-beta.7.3"
+  }
+}
