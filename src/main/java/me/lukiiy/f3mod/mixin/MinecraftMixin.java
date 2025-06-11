@@ -14,7 +14,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 @Mixin(Minecraft.class)
 public class MinecraftMixin {
     @Inject(method = "method_2111", at = @At("HEAD"), cancellable = true)
-    private void lukisF3_debugGraph(long par1, CallbackInfo ci) {
+    private void lukisF3$debugGraph(long par1, CallbackInfo ci) {
         if (!Keyboard.isKeyDown(F3Mod.keyShowGraph)) ci.cancel();
     }
 }

@@ -16,7 +16,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 @Mixin(LivingEntityRenderer.class)
 public class LivingRenderMixin {
     @Inject(method = "method_821", at = @At("HEAD"), cancellable = true)
-    private void lukisF3_toggleIDs(LivingEntity d, double e, double f, double par4, CallbackInfo ci) {
+    private void lukisF3$toggleIDs(LivingEntity d, double e, double f, double par4, CallbackInfo ci) {
         if (!Minecraft.method_2149() || !Keyboard.isKeyDown(F3Mod.keyEntityIDs)) ci.cancel();
     }
 }

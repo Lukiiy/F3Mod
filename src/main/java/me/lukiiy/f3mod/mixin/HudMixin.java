@@ -27,18 +27,18 @@ public class HudMixin {
     @Unique private class_564 scaledRes;
 
     @Inject(method = "render", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/font/TextRenderer;drawWithShadow(Ljava/lang/String;III)V", shift = At.Shift.AFTER))
-    private void lukisF3_render(float bl, boolean i, int j, int par4, CallbackInfo ci) {
+    private void lukisF3$render(float bl, boolean i, int j, int par4, CallbackInfo ci) {
         GameOptions options = minecraft.options;
         if (!options.debugHud) return;
 
         scaledRes = new class_564(options, minecraft.displayWidth, minecraft.displayHeight);
 
-        lukisF3_renderSection(F3Mod.Section.LEFT, 2, 64, F3Mod.TextAlignment.LEFT);
-        lukisF3_renderSection(F3Mod.Section.CONDITIONAL, -1, scaledRes.method_1858(), F3Mod.TextAlignment.RIGHT);
+        lukisF3$renderSection(F3Mod.Section.LEFT, 2, 64, F3Mod.TextAlignment.LEFT);
+        lukisF3$renderSection(F3Mod.Section.CONDITIONAL, -1, scaledRes.method_1858(), F3Mod.TextAlignment.RIGHT);
     }
 
     @Unique
-    private void lukisF3_renderSection(F3Mod.Section section, int startX, int startY, F3Mod.TextAlignment align) {
+    private void lukisF3$renderSection(F3Mod.Section section, int startX, int startY, F3Mod.TextAlignment align) {
         List<String> data = new ArrayList<>();
         ClientPlayerEntity player = minecraft.player;
         int color = 0xE0E0E0;
@@ -59,11 +59,11 @@ public class HudMixin {
             color = 0xFFFF55;
         }
 
-        lukisF3_renderText(data, startX, startY, align, color);
+        lukisF3$renderText(data, startX, startY, align, color);
     }
 
     @Unique
-    private void lukisF3_renderText(List<String> data, int startX, int startY, F3Mod.TextAlignment align, int color) {
+    private void lukisF3$renderText(List<String> data, int startX, int startY, F3Mod.TextAlignment align, int color) {
         TextRenderer textRenderer = minecraft.textRenderer;
         int lineHeight = 10;
         int y = startY;
@@ -79,22 +79,22 @@ public class HudMixin {
     // Surpress original F3 info
 
     @ModifyArg(method = "render", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/gui/hud/InGameHud;drawStringWithShadow(Lnet/minecraft/client/font/TextRenderer;Ljava/lang/String;III)V", ordinal = 2), index = 1)
-    private String lukisF3_suppressX(String par2) {
+    private String lukisF3$suppressX(String par2) {
         return "";
     }
 
     @ModifyArg(method = "render", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/gui/hud/InGameHud;drawStringWithShadow(Lnet/minecraft/client/font/TextRenderer;Ljava/lang/String;III)V", ordinal = 3), index = 1)
-    private String lukisF3_suppressY(String par2) {
+    private String lukisF3$suppressY(String par2) {
         return "";
     }
 
     @ModifyArg(method = "render", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/gui/hud/InGameHud;drawStringWithShadow(Lnet/minecraft/client/font/TextRenderer;Ljava/lang/String;III)V", ordinal = 4), index = 1)
-    private String lukisF3_suppressZ(String par2) {
+    private String lukisF3$suppressZ(String par2) {
         return "";
     }
 
     @ModifyArg(method = "render", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/gui/hud/InGameHud;drawStringWithShadow(Lnet/minecraft/client/font/TextRenderer;Ljava/lang/String;III)V", ordinal = 5), index = 1)
-    private String lukisF3_surpressF(String par2) {
+    private String lukisF3$surpressF(String par2) {
         return "";
     }
 }
