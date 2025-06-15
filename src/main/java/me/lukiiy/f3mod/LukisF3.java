@@ -2,15 +2,14 @@ package me.lukiiy.f3mod;
 
 import net.minecraft.class_43;
 import net.minecraft.class_519;
+import net.minecraft.class_56;
 import net.minecraft.entity.player.ClientPlayerEntity;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldProperties;
 import org.lwjgl.input.Keyboard;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Locale;
+import java.util.*;
 
 public class LukisF3 {
     public static class Left implements F3DataProvider {
@@ -29,14 +28,17 @@ public class LukisF3 {
             int facing = MathHelper.floot(player.yaw * 4f / 360f + .5) & 3;
             long worldTime = props.getTime();
 
+            int skyLight = world.method_252(blockX, blockY, blockZ);
+            int blockLight = world.method_164(class_56.BLOCK, blockX, blockY, blockZ);
+
             if (F3Mod.displaySeed && (!player.world.isRemote || F3Mod.multiplayerSeed)) display.add("Seed: " + world.getSeed());
             display.add("XYZ: " + String.format(Locale.US, "%.3f %.3f %.3f", player.x, player.y, player.z));
             display.add("Chunk: " + String.format("%s %s %s", blockX >> 4, blockY >> 4, blockZ >> 4) + " " + isSlimeChunk);
             display.add("Facing: " + getDirection(facing) + " (" + facing + ")");
             display.add("Biome: " + chunkManager.method_1787(blockX, blockZ).field_888);
-            display.add("Light: " + world.method_252(blockX, blockY, blockZ) + " (sky)");
+            display.add("Light: " + String.format("%s (%s sky, %s block)", Math.max(skyLight, blockLight), skyLight, blockLight));
             if (F3Mod.showTime) display.add("Time: " + coolFormattedTime(worldTime));
-            display.add("Day: " + (worldTime / 24000L + 1));
+            if (F3Mod.showDay) display.add("Day: " + (worldTime / 24000L + 1));
 
             return display;
         }
@@ -46,7 +48,7 @@ public class LukisF3 {
         @Override
         public List<String> provide(ClientPlayerEntity player, World world) {
             List<String> display = new ArrayList<>();
-            if (Keyboard.isKeyDown(F3Mod.keyShowGraph)) display.add("Showing Debug Graph");
+            if (F3Mod.debugGraph) display.add("Showing Debug Graph");
             if (Keyboard.isKeyDown(F3Mod.keyEntityIDs)) display.add("Showing Entity IDs");
             return display;
         }

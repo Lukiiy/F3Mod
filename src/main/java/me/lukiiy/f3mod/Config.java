@@ -36,7 +36,6 @@ public class Config {
     public void save() {
         try (FileWriter writer = new FileWriter(file)) {
             properties.store(writer, modName + " Config");
-            properties.store(writer, "A list of valid keybind codes can be found here: https://legacy.lwjgl.org/javadoc/org/lwjgl/input/Keyboard.html");
         } catch (IOException e) {
             F3Mod.LOGGER.error(e.getMessage());
         }
@@ -62,6 +61,10 @@ public class Config {
 
     public String get(String key) {
         return properties.getProperty(key);
+    }
+
+    public Boolean getBoolean(String key) {
+        return get(key).equalsIgnoreCase("true");
     }
 
     public String getOrDefault(String key, String defaultKey) {

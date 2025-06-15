@@ -29,6 +29,10 @@ public class F3Mod implements ClientModInitializer {
     public static boolean multiplayerSeed;
     public static boolean showTime;
     public static boolean slimeChunk;
+    public static boolean showDay;
+    public static boolean rightCenter;
+
+    public static boolean debugGraph = false;
 
     @Override
     public void onInitializeClient() {
@@ -40,13 +44,17 @@ public class F3Mod implements ClientModInitializer {
         config.setIfAbsent("seed.showOnMultiplayer", "false");
         config.setIfAbsent("time.show", "true");
         config.setIfAbsent("slimechunk.show", "true");
+        config.setIfAbsent("day.show", "true");
+        config.setIfAbsent("right.center", "false");
 
         keyShowGraph = key("Debug Graph", config.getOrDefault("keybind.graph", "LMENU"));
         keyEntityIDs = key("Show Entity IDs", config.getOrDefault("keybind.entityIDs", "RSHIFT"));
-        displaySeed = config.get("seed.show").equalsIgnoreCase("true");
-        multiplayerSeed = config.get("seed.showOnMultiplayer").equalsIgnoreCase("true");
-        showTime = config.get("time.show").equalsIgnoreCase("true");
-        slimeChunk = config.get("slimechunk.show").equalsIgnoreCase("true");
+        displaySeed = config.getBoolean("seed.show");
+        multiplayerSeed = config.getBoolean("seed.showOnMultiplayer");
+        showTime = config.getBoolean("time.show");
+        slimeChunk = config.getBoolean("slimechunk.show");
+        showDay = config.getBoolean("day.show");
+        rightCenter = config.getBoolean("right.center");
     }
 
     private int key(String action, String key) {
@@ -58,6 +66,7 @@ public class F3Mod implements ClientModInitializer {
 
     public enum Section {
         LEFT,
+        RIGHT,
         CONDITIONAL
     }
 
