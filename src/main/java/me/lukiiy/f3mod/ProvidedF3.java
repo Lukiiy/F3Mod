@@ -11,8 +11,13 @@ import org.lwjgl.input.Keyboard;
 
 import java.util.*;
 
-public class LukisF3 {
-    public static class Left implements F3DataProvider {
+public class ProvidedF3 {
+    public static class Left implements DebugEntry {
+        @Override
+        public F3Mod.Section getSection() {
+            return F3Mod.Section.LEFT;
+        }
+
         @Override
         public List<String> provide(ClientPlayerEntity player, World world) {
             List<String> display = new ArrayList<>();
@@ -44,7 +49,12 @@ public class LukisF3 {
         }
     }
 
-    public static class Conditional implements F3DataProvider {
+    public static class Conditional implements DebugEntry {
+        @Override
+        public F3Mod.Section getSection() {
+            return F3Mod.Section.RIGHT;
+        }
+
         @Override
         public List<String> provide(ClientPlayerEntity player, World world) {
             List<String> display = new ArrayList<>();

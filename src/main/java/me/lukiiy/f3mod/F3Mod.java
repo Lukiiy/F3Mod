@@ -1,6 +1,7 @@
 package me.lukiiy.f3mod;
 
 import net.fabricmc.api.ClientModInitializer;
+import net.fabricmc.loader.api.FabricLoader;
 import org.lwjgl.input.Keyboard;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -14,13 +15,13 @@ public class F3Mod implements ClientModInitializer {
     public static final String MOD_ID = "f3mod";
     public static final Logger LOGGER = LoggerFactory.getLogger(MOD_ID);
 
-    public static final Map<Section, List<F3DataProvider>> PROVIDERS = new EnumMap<>(Section.class);
+    public static final Map<Section, List<DebugEntry>> PROVIDERS = new EnumMap<>(Section.class);
 
     static {
         for (Section side : Section.values()) PROVIDERS.put(side, new ArrayList<>());
 
-        registerProvider(Section.LEFT, new LukisF3.Left());
-        registerProvider(Section.CONDITIONAL, new LukisF3.Conditional());
+        registerEntry(new ProvidedF3.Left());
+        registerEntry(new ProvidedF3.Conditional());
     }
 
     public static int keyShowGraph;
@@ -36,7 +37,7 @@ public class F3Mod implements ClientModInitializer {
 
     @Override
     public void onInitializeClient() {
-        Config config = new Config(MOD_ID + ".properties", "F3");
+        Config config = new Config(MOD_ID, "F3");
 
         config.setIfAbsent("keybind.graph", "LMENU");
         config.setIfAbsent("keybind.entityIDs", "RSHIFT");
@@ -55,6 +56,8 @@ public class F3Mod implements ClientModInitializer {
         slimeChunk = config.getBoolean("slimechunk.show");
         showDay = config.getBoolean("day.show");
         rightCenter = config.getBoolean("right.center");
+
+        FabricLoader.getInstance().getEntrypoints("f3mod", F3ModAPI.class).forEach(entryPoint -> entryPoint.getEntries().forEach(F3Mod::registerEntry));
     }
 
     private int key(String action, String key) {
@@ -75,7 +78,7 @@ public class F3Mod implements ClientModInitializer {
         RIGHT
     }
 
-    public static void registerProvider(Section section, F3DataProvider provider) {
-        PROVIDERS.get(section).add(provider);
+    public static void registerEntry(DebugEntry entry) {
+        PROVIDERS.get(entry.getSection()).add(entry);
     }
 }

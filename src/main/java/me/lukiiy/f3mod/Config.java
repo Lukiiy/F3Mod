@@ -17,7 +17,7 @@ public class Config {
         File confDir = new File(Minecraft.getRunDirectory(), "config");
         if (!confDir.exists()) confDir.mkdirs();
 
-        this.file = new File(confDir, fileName);
+        this.file = new File(confDir, fileName + ".properties");
         this.modName = modName;
 
         load();

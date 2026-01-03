@@ -5,8 +5,9 @@ import net.minecraft.world.World;
 
 import java.util.List;
 
-@FunctionalInterface
-public interface F3DataProvider {
+public interface DebugEntry {
+    F3Mod.Section getSection();
+
     List<String> provide(ClientPlayerEntity player, World world);
 
     default Padding getPadding() {
