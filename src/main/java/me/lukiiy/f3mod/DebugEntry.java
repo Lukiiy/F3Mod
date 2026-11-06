@@ -1,6 +1,6 @@
 package me.lukiiy.f3mod;
 
-import net.minecraft.entity.player.ClientPlayerEntity;
+import net.minecraft.client.entity.mob.player.ClientPlayerEntity;
 import net.minecraft.world.World;
 
 import java.util.List;
