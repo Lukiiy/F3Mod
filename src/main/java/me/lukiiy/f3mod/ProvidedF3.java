@@ -1,12 +1,12 @@
 package me.lukiiy.f3mod;
 
-import net.minecraft.class_43;
-import net.minecraft.class_519;
-import net.minecraft.class_56;
-import net.minecraft.entity.player.ClientPlayerEntity;
+import net.minecraft.client.entity.mob.player.ClientPlayerEntity;
 import net.minecraft.util.math.MathHelper;
+import net.minecraft.world.LightType;
 import net.minecraft.world.World;
-import net.minecraft.world.WorldProperties;
+import net.minecraft.world.WorldData;
+import net.minecraft.world.biome.source.BiomeSource;
+import net.minecraft.world.chunk.WorldChunk;
 import org.lwjgl.input.Keyboard;
 
 import java.util.*;
@@ -21,26 +21,23 @@ public class ProvidedF3 {
         @Override
         public List<String> provide(ClientPlayerEntity player, World world) {
             List<String> display = new ArrayList<>();
-            WorldProperties props = world.method_262();
-            class_519 chunkManager = world.method_1781();
-
+            WorldData data = world.getData();
+            BiomeSource biomeSource = world.getBiomeSource();
             int blockX = (int) Math.floor(player.x);
             int blockY = (int) Math.floor(player.y);
             int blockZ = (int) Math.floor(player.z);
+            WorldChunk chunk = world.getChunkAt(blockX, blockZ);
+            String isSlimeChunk = F3Mod.slimeChunk ? "Slime: " + (chunk.getRandomForSlime(987234911L).nextInt(10) == 0 ? "Yes" : "No") : "";
+            int facing = MathHelper.floor(player.yaw * 4f / 360f + .5) & 3;
+            long worldTime = data.getTime();
+            int skyLight = world.getActualLight(blockX, blockY, blockZ);
+            int blockLight = world.getLight(LightType.BLOCK, blockX, blockY, blockZ);
 
-            class_43 chunk = world.method_199(blockX, blockZ);
-            String isSlimeChunk = F3Mod.slimeChunk ? "Slime: " + (chunk.method_863(987234911L).nextInt(10) == 0 ? "Yes" : "No") : "";
-            int facing = MathHelper.floot(player.yaw * 4f / 360f + .5) & 3;
-            long worldTime = props.getTime();
-
-            int skyLight = world.method_252(blockX, blockY, blockZ);
-            int blockLight = world.method_164(class_56.BLOCK, blockX, blockY, blockZ);
-
-            if (F3Mod.displaySeed && (!player.world.isRemote || F3Mod.multiplayerSeed)) display.add("Seed: " + world.getSeed());
+            if (F3Mod.displaySeed && (!player.world.isMultiplayer || F3Mod.multiplayerSeed)) display.add("Seed: " + world.getSeed());
             display.add("XYZ: " + String.format(Locale.US, "%.3f %.3f %.3f", player.x, player.y, player.z));
             display.add("Chunk: " + String.format("%s %s %s", blockX >> 4, blockY >> 4, blockZ >> 4) + " " + isSlimeChunk);
             display.add("Facing: " + getDirection(facing) + " (" + facing + ")");
-            display.add("Biome: " + chunkManager.method_1787(blockX, blockZ).field_888);
+            display.add("Biome: " + biomeSource.getBiome(blockX, blockZ).name);
             display.add("Light: " + String.format("%s (%s sky, %s block)", Math.max(skyLight, blockLight), skyLight, blockLight));
             if (F3Mod.showTime) display.add("Time: " + coolFormattedTime(worldTime));
             if (F3Mod.showDay) display.add("Day: " + (worldTime / 24000L + 1));
