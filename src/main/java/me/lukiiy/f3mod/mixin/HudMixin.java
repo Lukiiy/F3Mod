@@ -25,7 +25,6 @@ import java.util.concurrent.atomic.AtomicInteger;
 @Mixin(GameGui.class)
 public class HudMixin {
     @Shadow private Minecraft minecraft;
-
     @Unique private final int LINE_HEIGHT = 10;
 
     @Inject(method = "render", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/render/TextRenderer;drawWithShadow(Ljava/lang/String;III)V", ordinal = 4, shift = At.Shift.AFTER))
@@ -50,6 +49,7 @@ public class HudMixin {
         if (section == F3Mod.Section.CONDITIONAL) {
             int lines = F3Mod.PROVIDERS.get(section).stream().mapToInt(p -> {
                 List<String> data = p.provide(player, player.world);
+
                 return data != null ? data.size() : 0;
             }).sum();
 

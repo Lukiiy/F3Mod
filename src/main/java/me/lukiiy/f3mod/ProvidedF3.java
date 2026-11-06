@@ -55,14 +55,17 @@ public class ProvidedF3 {
         @Override
         public List<String> provide(ClientPlayerEntity player, World world) {
             List<String> display = new ArrayList<>();
+
             if (F3Mod.debugGraph) display.add("Showing Debug Graph");
             if (Keyboard.isKeyDown(F3Mod.keyEntityIDs)) display.add("Showing Entity IDs");
+
             return display;
         }
     }
 
     private static String getDirection(int face) {
         String[] directions = {"south [+Z]", "west [-X]", "north [-Z]", "east [+X]"};
+
         return face >= 0 && face < directions.length ? directions[face] : "???";
     }
 
